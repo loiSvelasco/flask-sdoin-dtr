@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block title %}Register{% endblock %}
+{% block content %}
+<h1>register</h1>
+<div class="loginBox">
+  <form method="post" id="login">
+    <input type="text" name="username" class="form-control" placeholder="username">
+    <input type="password" name="password" class="form-control" placeholder="password">
+    <input type="password" name="password2" class="form-control" placeholder="verify">
+  </form>
+</div>
+<!-- <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
+<p class="lead">
+  <button form="login" class="btn btn-lg btn-secondary fw-bold border-white bg-white">submit</button>
+</p>
+{% endblock %}

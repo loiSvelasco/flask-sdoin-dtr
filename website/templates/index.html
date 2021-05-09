@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block content %}
+<form method="post" id="logDtr"></form>
+<h1>scan your id #.</h1>
+<div class="box">
+  <input type="text" form="logDtr" name="idno" class="text-white font-weight-bold" autofocus required>
+</div>
+<!-- <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p> -->
+<p class="lead">
+  <button type="submit" form="logDtr" class="btn btn-lg btn-secondary fw-bold border-white bg-white">submit</button>
+</p>
+{% endblock %}
