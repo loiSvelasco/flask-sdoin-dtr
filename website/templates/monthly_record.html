@@ -1,12 +1,35 @@
 {% extends "base.html" %} {% block title %}Generate{% endblock %}
 {% block content %}
-<h1>Which month would you like to see?</h1>
-<p class="lead fs-6">If a month is not listed, it means no record was found during that month.</p>
+<h3>Here's your DTR for {{month_name}} {{year}}</h3>
 <div class="row mt-4">
   <div class="col">
-    record of {{staff_id}} <br>
-    in the year {{year}} <br>
-    month {{month}}
+    <table class="table table-light table-sm table-hover table-bordered table-striped">
+      <thead>
+        <tr>
+          <th class="text-center"></th>
+          <th colspan="2" class="text-center">AM</th>
+          <th colspan="2" class="text-center">PM</th>
+        </tr>
+        <tr>
+          <th class="text-center">{{month_name}}</th>
+          <th class="text-center">In</th>
+          <th class="text-center">Out</th>
+          <th class="text-center">In</th>
+          <th class="text-center">Out</th>
+        </tr>
+      </thead>
+        <tbody>
+          {% for day in days %}
+            <tr>
+              <td class="text-center">{{ day.time_in_am.strftime('%d') }}</td>
+              <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+            </tr>
+          {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 

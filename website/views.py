@@ -4,6 +4,7 @@ from sqlalchemy import func, extract
 from .models import Staff, DailyTimeRecord
 from . import db
 from datetime import datetime, date
+import calendar
 
 views = Blueprint('views', __name__)
 
@@ -114,7 +115,19 @@ def monthly_record(staff_id, year, month):
     staff_id = staff_id
     year = year
     month = month
-    return render_template('monthly_record.html', user=current_user, staff_id=staff_id, year=year, month=month)
+    month_name = calendar.month_name[month]
+
+    staff_primary_id = Staff.query.filter(
+        Staff.staff_id_no == staff_id
+    ).first()
+
+    days = DailyTimeRecord.query.filter(
+        DailyTimeRecord.staff_id == staff_primary_id.id,
+        extract('year', DailyTimeRecord.time_in_am) == year,
+        extract('month', DailyTimeRecord.time_in_am) == month
+    ).all()
+
+    return render_template('monthly_record.html', user=current_user, year=year, days=days, month_name=month_name)
 
 @views.route('/admin')
 @login_required

@@ -31,6 +31,7 @@ def logout():
     return redirect(url_for('auth.login'))
 
 @auth.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     if request.method == 'POST':
         username = request.form.get('username')
