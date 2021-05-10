@@ -29,6 +29,7 @@
         }
       }
     </style>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='clock-64.ico') }}">
 
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
       <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -44,14 +45,14 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="static/index.css" rel="stylesheet">
+    <link href="{{ url_for('static',filename='index.css') }}" rel="stylesheet">
   </head>
   <body class="d-flex h-100 text-center text-white bg-dark">
     
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
   <header class="mb-auto">
     <div>
-      <h3 class="float-md-start mb-0">~sdoin.dtr</h3>
+      <h3 class="float-md-start mb-0"><a href="/" class="text-decoration-none text-white">~sdoin.dtr</a></h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
         {% if user.is_authenticated %}
         <a class="nav-link {% if request.path == '/' %}active{% endif %}" aria-current="page" href="/">Home</a>
@@ -107,6 +108,6 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/jszip-2.5.0/dt-1.10.24/b-1.7.0/b-html5-1.7.0/datatables.min.js"></script>
-  <script src="static/index.js"></script>
+  <script src="{{ url_for('static',filename='index.js') }}"></script>
   </body>
 </html>

@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}Generate{% endblock %}
+{% block content %}
+<h1>Hello {{ staff.name }}! Which month would you like to see?</h1>
+<p class="lead fs-6">If a month is not listed, it means no record was found during that month.</p>
+<div class="row mt-4">
+  <div class="col">
+      {% for month in months  %}
+        <a 
+        href="{{staff.staff_id_no}}/viewdtr/{{ month.time_in_am.strftime('%Y') }}/{{ month.time_in_am.strftime('%m') }}" 
+        class="btn btn-lg btn-outline-light mb-3 mr-3"
+        >{{ month.time_in_am.strftime('%B') }}
+        </a>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+{% endblock %}

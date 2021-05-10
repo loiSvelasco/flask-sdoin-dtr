@@ -22,10 +22,10 @@
       {% for personnel in allStaff if personnel.id == dtr.staff_id %}
       <td>{{personnel.name}}</td>
       {% endfor %}
-      <td class="text-center">{{dtr.time_in_am.strftime('%I:%M')}}</td>
-      <td class="text-center">{{dtr.time_out_am.strftime('%I:%M')}}</td>
-      <td class="text-center">{{dtr.time_in_pm.strftime('%I:%M')}}</td>
-      <td class="text-center">{{dtr.time_out_am.strftime('%I:%M')}}</td>
+      <td class="text-center">{% if dtr.time_in_am is not none %}{{dtr.time_in_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+      <td class="text-center">{% if dtr.time_out_am is not none %}{{dtr.time_out_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+      <td class="text-center">{% if dtr.time_in_pm is not none %}{{dtr.time_in_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
+      <td class="text-center">{% if dtr.time_out_pm is not none %}{{dtr.time_out_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
     </tr>
     {% endfor %}
   </tbody>

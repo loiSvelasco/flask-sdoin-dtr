@@ -1,12 +1,11 @@
-from flask import Flask, request, render_template, flash, Blueprint, url_for
+from flask import Flask, request, render_template, flash, Blueprint, redirect, url_for
 from flask_login import login_required, current_user
-from sqlalchemy import func
+from sqlalchemy import func, extract
 from .models import Staff, DailyTimeRecord
 from . import db
 from datetime import datetime, date
 
 views = Blueprint('views', __name__)
-
 
 @views.route('/', methods=['GET', 'POST'])
 def index():
@@ -28,7 +27,7 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicated records, please try again in a minute.', category='error')
+                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_out_am = dt
@@ -40,7 +39,7 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicated records, please try again in a minute.', category='error')
+                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_in_pm = dt
@@ -52,7 +51,7 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicated records, please try again in a minute.', category='error')
+                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_out_pm = dt
@@ -77,14 +76,51 @@ def logs():
     allDtr = DailyTimeRecord.query.filter(func.date(DailyTimeRecord.time_in_am)==today_dt).all()
     return render_template('logs.html', user=current_user, allDtr=allDtr, allStaff=allStaff)
 
-@views.route('/generate')
+@views.route('/generate', methods=['GET', 'POST'])
 def generate():
+    if request.method == 'POST':
+        idno = request.form.get('idno')
+        check = Staff.query.filter_by(staff_id_no=idno).first()
+        if check:
+            return redirect(url_for('views.generate_report', staff_id=idno))
+        else:
+            flash('No personnel found with that id #. Try again! This time, type it correctly!', category='error')
+            return render_template('generate.html', user=current_user)
+
     return render_template('generate.html', user=current_user)
+
+@views.route('/generate/<string:staff_id>')
+def generate_report(staff_id):
+    staff = Staff.query.filter_by(staff_id_no=staff_id).first()
+    dt = date.today()
+    year_now = dt.year
+
+    record = DailyTimeRecord.query.filter(
+        DailyTimeRecord.staff_id == staff.id,
+        extract('year', DailyTimeRecord.time_in_am) == year_now
+    ).all()
+
+    months = DailyTimeRecord.query.filter(
+        DailyTimeRecord.staff_id == staff.id,
+        extract('year', DailyTimeRecord.time_in_am) == year_now
+    ).group_by(
+        extract('month', DailyTimeRecord.time_in_am)
+    ).distinct()
+    
+    return render_template('generate_user_log.html', user=current_user, staff=staff, record=record, months=months)
+
+@views.route('/generate/<string:staff_id>/viewdtr/<int:year>/<int:month>')
+def monthly_record(staff_id, year, month):
+    staff_id = staff_id
+    year = year
+    month = month
+    return render_template('monthly_record.html', user=current_user, staff_id=staff_id, year=year, month=month)
 
 @views.route('/admin')
 @login_required
 def admin():
-    return render_template('administration.html', user=current_user)
+    staff = Staff.query.all()
+    return render_template('administration.html', user=current_user, staff=staff)
 
 @views.route('/about')
 def about():

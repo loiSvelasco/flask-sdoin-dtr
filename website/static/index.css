@@ -109,6 +109,11 @@ body {
   max-width: 2em;
 }
 
+.devicon-sqlite
+{
+  max-width: 2.5em;
+}
+
 .devicon-sqla path
 {
   fill: #fff;
@@ -117,5 +122,15 @@ body {
 .devicon-flask path
 {
   fill: #fff;
+}
+
+.devicon-bootstrap
+{
+  max-width: 2.5em;
+}
+
+.monthNumber
+{
+  margin: 2rem auto;
 }
 /* SOCIAL BUTTONS */
