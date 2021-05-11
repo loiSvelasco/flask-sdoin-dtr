@@ -20,7 +20,7 @@
       <td>{{personnel.name}}</td>
       <td>
         <button class="btn btn-outline-light editPersonnel" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil-square-o"></i></button>
-        <a href="/del/personnel/{{personnel.id}}" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+        <button data-href="/del/personnel/{{personnel.id}}" data-name="{{personnel.name}}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm-del"><i class="fa fa-trash"></i></button>
       </td>
     </tr>
     {% endfor%}
@@ -33,13 +33,13 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-dark" id="staticBackdropLabel">Enroll Personnel to Application</h5>
+        <h5 class="modal-title text-dark custom-modal-text" id="staticBackdropLabel">Enroll Personnel to Application</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-dark">
         <form method="POST" id="admin_personnel"></form>
         <div class="mb-3">
-          <input type="text" class="form-control" form="admin_personnel" name="db_id" id="p_db_id" value="">
+          <input type="hidden" class="form-control" form="admin_personnel" name="db_id" id="p_db_id" value="">
         </div>
         <div class="mb-3">
           <input type="text" class="form-control" form="admin_personnel" name="personnel_id" id="p_id" placeholder="ID #" value="">
@@ -52,6 +52,27 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-dark" form="admin_personnel" id="save-btn">Add Personnel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="confirm-del" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-dark custom-modal-text" id="staticBackdropLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-dark custom-modal-text">
+        <p>You are about to delete <span class="personnel-name"></span> from the table, this procedure is irreversible.</p>
+        <p>Do you wish to proceed?</p>
+        <p class="debug-url"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok">Delete</a>
       </div>
     </div>
   </div>

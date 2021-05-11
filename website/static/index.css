@@ -133,4 +133,9 @@ body {
 {
   margin: 2rem auto;
 }
+
+.custom-modal-text {
+  text-shadow: none !important;
+  text-align: left !important
+}
 /* SOCIAL BUTTONS */

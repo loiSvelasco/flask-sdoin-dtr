@@ -1,6 +1,6 @@
 
 $('#staffTable').DataTable({
-    pagingType: "simple",
+    pagingType: "full",
     lengthChange: false
 });
 
@@ -27,4 +27,11 @@ $(document).ready(function() {
         $('#p_id').val(data[1]);
         $('#p_name').val(data[2]);
     });
+});
+
+$('#confirm-del').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    $(this).find('.btn-ok').attr('name', $(e.relatedTarget).data('name'));
+    $('.debug-url').html('Debug-url: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+    $('.personnel-name').html('<strong>' + $(this).find('.btn-ok').attr('name') + '</strong>');
 });
