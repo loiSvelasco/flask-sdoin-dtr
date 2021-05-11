@@ -77,13 +77,13 @@
     {% if messages %}
         {% for category, message in messages %}
             {% if category == 'error' %}
-            <div class="alert alert-warning alert-dismissable fade show" role="alert">
+            <div class="alert alert-warning alert-dismissable fade show mt-4" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#exclamation-triangle-fill"/></svg>
                 <strong>{{ message }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% else %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#check-circle-fill"/></svg>
                 <strong>{{ message }}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -98,6 +98,9 @@
         
     {% endblock %}
   </main>
+
+  {% block modals %}
+  {% endblock %}
 
   <footer class="mt-auto text-white-50">
     <p>improved daily time record for <a href="#" class="text-white">Schools Division of Ilocos Norte</a>, <br>by <a href="#" class="text-white">Louis Velasco</a>. designed with ❤</p>

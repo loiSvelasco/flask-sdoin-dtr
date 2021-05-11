@@ -129,9 +129,25 @@ def monthly_record(staff_id, year, month):
 
     return render_template('monthly_record.html', user=current_user, year=year, days=days, month_name=month_name)
 
-@views.route('/admin')
+@views.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
+    if request.method == 'POST':
+        name = request.form.get('personnel_name')
+        id = request.form.get('personnel_id')
+        db_control = request.form.get('db_id')
+
+        if db_control != '':
+            staff = Staff.query.filter(Staff.id==db_control).first()
+            staff.staff_id_no = id
+            staff.name = name
+            db.session.commit()
+            flash('Changes saved!', category='success')
+        else:    
+            new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None)
+            db.session.add(new_staff)
+            db.session.commit()
+            flash('Added ' + name + ' to the database!', category='success')
     staff = Staff.query.all()
     return render_template('administration.html', user=current_user, staff=staff)
 
@@ -139,7 +155,10 @@ def admin():
 def about():
     return render_template('masthead.html', user=current_user)
 
-@views.route('/debug')
-def debug():
-    staff = Staff.query.all()
-    return render_template('debug.html', staff=staff, user=current_user)
+@views.route('/del/personnel/<int:staff_id>')
+def delete_personnel(staff_id):
+    staff = Staff.query.filter_by(id=staff_id).one()
+    db.session.delete(staff)
+    db.session.commit()
+    flash('Deleted from the database.', category='success')
+    return redirect(url_for('views.admin'))
