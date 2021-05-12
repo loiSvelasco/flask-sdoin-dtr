@@ -1,0 +1,14 @@
+{% extends "base.html" %} {% block title %}Success!{% endblock %}
+{% block content %}
+<p class="display-1">{{ time }}</p>
+<p class="h2">{{ day }}</p>
+<hr>
+<h1>{{ message }}</h1>
+
+<script>    
+  window.setTimeout(function(){
+    window.location.href = "/";
+    }, 4500);
+</script>
+
+{% endblock %}

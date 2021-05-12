@@ -35,3 +35,32 @@ $('#confirm-del').on('show.bs.modal', function(e) {
     $('.debug-url').html('Debug-url: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
     $('.personnel-name').html('<strong>' + $(this).find('.btn-ok').attr('name') + '</strong>');
 });
+
+function currentTime() {
+    var date = new Date(); /* creating object of Date class */
+    var hour = date.getHours();
+    var min = date.getMinutes();
+    var sec = date.getSeconds();
+
+    var newformat = hour >= 12 ? 'PM' : 'AM'; 
+    hour = hour % 12; 
+    hour = hour ? hour : 12; 
+    min = min < 10 ? '0' + min : min;
+
+    hour = updateTime(hour);
+    min = updateTime(min);
+    sec = updateTime(sec);
+    document.getElementById("clock").innerText = hour + ":" + min + ":" + sec + " " + newformat; /* adding time to the div */
+    var t = setTimeout(function(){ currentTime() }, 1000); /* setting timer */
+  }
+
+  function updateTime(k) {
+    if (k < 10) {
+      return "0" + k;
+    }
+    else {
+      return k;
+    }
+  }
+
+  currentTime(); /* calling currentTime() function to initiate the process */

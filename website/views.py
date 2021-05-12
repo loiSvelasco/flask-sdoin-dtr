@@ -33,8 +33,7 @@ def index():
                 else:
                     dtr_log.time_out_am = dt
                     db.session.commit()
-                    flash('Timed out @ ' + dt.strftime('%I:%M %p') + ' in the morning.', category='success')
-                    return render_template('index.html', user=current_user)
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Enjoy your lunch ' + staff.name.split(' ',1)[0] + '!')
             elif dtr_log.time_in_pm == None:
                 a, b = dtr_log.time_out_am, dt
                 c = b-a
@@ -45,8 +44,7 @@ def index():
                 else:
                     dtr_log.time_in_pm = dt
                     db.session.commit()
-                    flash('Timed in @ ' + dt.strftime('%I:%M %p') + ' in the afternoon.', category='success')
-                    return render_template('index.html', user=current_user)
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Welcome back ' + staff.name.split(' ',1)[0] + '! How was your lunch?')
             elif dtr_log.time_out_pm == None:
                 a, b = dtr_log.time_in_pm, dt
                 c = b-a
@@ -57,8 +55,7 @@ def index():
                 else:
                     dtr_log.time_out_pm = dt
                     db.session.commit()
-                    flash('Timed out @ ' + dt.strftime('%I:%M %p') + ' in the afternoon.', category='success')
-                    return render_template('index.html', user=current_user)
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Good work today ' + staff.name.split(' ',1)[0] + '!')
             else:
                 flash('Your in and out for the morning and afternoon already exists! Please do not spam this application.', category='error')
                 return render_template('index.html', user=current_user)
@@ -66,9 +63,9 @@ def index():
             new_dtr_log = DailyTimeRecord(time_in_am=dt, time_out_am=None, time_in_pm=None, time_out_pm=None, staff_id=staff.id)
             db.session.add(new_dtr_log)
             db.session.commit()
-            flash('Timed in @ ' + dt.strftime('%I:%M %p') + ' in the morning.', category='success')
-            return render_template('index.html', user=current_user)
+            return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Enjoy your day ' + staff.name.split(' ',1)[0] + '!')
     return render_template('index.html', user=current_user)
+
 
 @views.route('/logs')
 def logs():
@@ -96,11 +93,6 @@ def generate_report(staff_id):
     dt = date.today()
     year_now = dt.year
 
-    record = DailyTimeRecord.query.filter(
-        DailyTimeRecord.staff_id == staff.id,
-        extract('year', DailyTimeRecord.time_in_am) == year_now
-    ).all()
-
     months = DailyTimeRecord.query.filter(
         DailyTimeRecord.staff_id == staff.id,
         extract('year', DailyTimeRecord.time_in_am) == year_now
@@ -108,7 +100,7 @@ def generate_report(staff_id):
         extract('month', DailyTimeRecord.time_in_am)
     ).distinct()
     
-    return render_template('generate_user_log.html', user=current_user, staff=staff, record=record, months=months)
+    return render_template('generate_user_log.html', user=current_user, staff=staff, months=months)
 
 @views.route('/generate/<string:staff_id>/viewdtr/<int:year>/<int:month>')
 def monthly_record(staff_id, year, month):
@@ -116,6 +108,9 @@ def monthly_record(staff_id, year, month):
     year = year
     month = month
     month_name = calendar.month_name[month]
+
+    dt = date.today()
+    year_now = dt.year
 
     staff_primary_id = Staff.query.filter(
         Staff.staff_id_no == staff_id
@@ -126,6 +121,9 @@ def monthly_record(staff_id, year, month):
         extract('year', DailyTimeRecord.time_in_am) == year,
         extract('month', DailyTimeRecord.time_in_am) == month
     ).all()
+
+    if year_now != year and year_now < year:
+        return render_template('timetravel.html', user=current_user, year=year, days=days, month_name=month_name)   
 
     return render_template('monthly_record.html', user=current_user, year=year, days=days, month_name=month_name)
 

@@ -17,8 +17,11 @@
  */
 
 body {
+  /* background-image: url("media/mojave.png"); */
+  background-position: center;
+  background-size: cover;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
-  box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+  /* box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5); */
 }
 
 .cover-container {
@@ -93,6 +96,7 @@ body {
 .dev-photo
 {
   max-width: 50%;
+  margin-top: 2em;
 }
 
 .text-justify {

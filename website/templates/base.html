@@ -1,4 +1,10 @@
-
+<!--
+  ~sdoin.dtr
+  Developer: Louis Eusebius Superficial Velasco
+  Technologies used: Python, Flask, SQLAlchemy, HTML, CSS, JS, BOOTSTRAP, SQLite3
+  Description: A simple web-app to track personnel's daily time record
+  License: https://github.com/loiSvelasco/flask-sdoin-dtr/blob/master/LICENSE 
+-->
 <!doctype html>
 <html lang="en" class="h-100">
   <head>
@@ -6,6 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="sdoin.dtr - open-source project for schools division of ilocos norte">
     <meta name="generator" content="Hugo 0.83.1">
+    <meta name="author" content="Louis Eusebius Superficial Velasco">
     <title>{% block title%}{% endblock%}</title>
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
@@ -93,10 +100,15 @@
     {% endif %}
   {% endwith %}
 
-  <main class="px-3">
+  <main class="px-3 mb-4">
+    
     {% block content %}
         
     {% endblock %}
+    <script type="text/javascript">
+
+    </script>
+    
   </main>
 
   {% block modals %}

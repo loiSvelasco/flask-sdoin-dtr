@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Generate{% endblock %}
 {% block content %}
-<h3>Here's your DTR for {{month_name}} {{year}}</h3>
+<h3 class="mt-4">Here's your DTR for {{month_name}} {{year}}</h3>
 <div class="row mt-4">
   <div class="col">
     <table class="table table-dark table-sm table-hover table-bordered table-striped">
@@ -19,14 +19,24 @@
         </tr>
       </thead>
         <tbody>
-          {% for day in days %}
+          {% for i in range(1,32) %}
+            {% for day in days if day.time_in_am.strftime('%d')|int == i %}
             <tr>
-              <td class="text-center">{{ day.time_in_am.strftime('%d') }}</td>
+              <td class="text-center">{{i}}</td>
               <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
               <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
               <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
               <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
             </tr>
+            {% else %}
+            <tr>
+              <td class="text-center">{{i}}</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+            </tr>
+            {% endfor %}
           {% endfor %}
       </tbody>
     </table>
