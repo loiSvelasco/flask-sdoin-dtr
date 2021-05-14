@@ -9,4 +9,4 @@ def not_found(e):
     return render_template('404.html', user=current_user), 404
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
