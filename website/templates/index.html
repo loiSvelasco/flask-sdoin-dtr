@@ -1,6 +1,7 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %}
 {% block content %}
-<p id="clock" class="h3"></p>
+<img src="{{ url_for('static', filename='media/sdoin-logo.png') }}" alt="sdoin-logo" height="200" width="200">
+<p id="clock" class="h3 mt-4"></p>
 <form method="post" id="logDtr"></form>
 <h1>scan your id #.</h1>
 <div class="box">

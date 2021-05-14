@@ -17,7 +17,9 @@
  */
 
 body {
-  /* background-image: url("media/mojave.png"); */
+  /* background-blend-mode: color; */
+  /* background-color: rgba(0, 0, 0, 0.192); */
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("media/mojave.png");
   background-position: center;
   background-size: cover;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
@@ -142,4 +144,11 @@ body {
   text-shadow: none !important;
   text-align: left !important
 }
-/* SOCIAL BUTTONS */
+
+.card {
+  background-color: rgba(245, 245, 245, 0.0)
+}
+
+.card-header, .card-footer, .card-block {
+  opacity: 1 !important;
+}
