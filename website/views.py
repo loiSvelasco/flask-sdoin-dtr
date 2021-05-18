@@ -14,6 +14,10 @@ def index():
         id_no = request.form.get('idno')
         staff = Staff.query.filter_by(staff_id_no=id_no).first()
 
+        if not staff:
+            flash('No staff with that ID.', category='error')
+            return render_template('index.html', user=current_user)
+
         dt = datetime.now()
         today_dt = date.today()
 

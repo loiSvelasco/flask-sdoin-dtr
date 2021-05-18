@@ -19,8 +19,8 @@
       <td>{{personnel.staff_id_no}}</td>
       <td>{{personnel.name}}</td>
       <td>
-        <button class="btn btn-outline-light editPersonnel" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil-square-o"></i></button>
-        <button data-href="/del/personnel/{{personnel.id}}" data-name="{{personnel.name}}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm-del"><i class="fa fa-trash"></i></button>
+        <span data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><button class="btn btn-outline-light editPersonnel" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil-square-o"></i></button></span>
+        <span data-bs-toggle="tooltip" data-bs-placement="right" title="Delete"><button data-href="/del/personnel/{{personnel.id}}" data-name="{{personnel.name}}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm-del"><i class="fa fa-trash"></i></button></span>
       </td>
     </tr>
     {% endfor%}

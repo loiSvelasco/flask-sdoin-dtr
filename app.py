@@ -10,3 +10,5 @@ def not_found(e):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+# * To run: waitress-serve --port=80 --call "app:create_app"
