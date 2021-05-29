@@ -1,10 +1,11 @@
-from flask import Flask, request, render_template, flash, Blueprint, redirect, url_for
+from flask import Flask, request, render_template, flash, Blueprint, redirect, url_for, Response
 from flask_login import login_required, current_user
 from sqlalchemy import func, extract
 from .models import Staff, DailyTimeRecord
 from . import db
 from datetime import datetime, date
 import calendar
+from werkzeug.utils import secure_filename
 
 views = Blueprint('views', __name__)
 
@@ -137,16 +138,30 @@ def admin():
     if request.method == 'POST':
         name = request.form.get('personnel_name')
         id = request.form.get('personnel_id')
+        img = request.files['personnel_img']
         db_control = request.form.get('db_id')
+        filename = secure_filename(img.filename)
+        mimetype = img.mimetype
 
         if db_control != '':
-            staff = Staff.query.filter(Staff.id==db_control).first()
-            staff.staff_id_no = id
-            staff.name = name
+            if not img:
+                staff = Staff.query.filter(Staff.id==db_control).first()
+                staff.staff_id_no = id
+                staff.name = name
+            else:
+                staff = Staff.query.filter(Staff.id==db_control).first()
+                staff.staff_id_no = id
+                staff.name = name
+                staff.img = img.read()
+                staff.img_name = filename
+                staff.img_mime = mimetype
             db.session.commit()
             flash('Changes saved!', category='success')
-        else:    
-            new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None)
+        else:
+            if not img:
+                new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None)
+            else:
+                new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None, img=img.read(), img_name=filename, img_mime=mimetype)
             db.session.add(new_staff)
             db.session.commit()
             flash('Added ' + name + ' to the database!', category='success')
@@ -156,6 +171,15 @@ def admin():
 @views.route('/about')
 def about():
     return render_template('masthead.html', user=current_user)
+
+@views.route('/img/<string:staff_id>')
+def get_img(staff_id):
+    img = Staff.query.filter_by(staff_id_no=staff_id).first()
+    if not img:
+        return render_template('404.html', user=current_user)
+
+    return Response(img.img, mimetype=img.img_mime)   
+
 
 @views.route('/del/personnel/<int:staff_id>')
 def delete_personnel(staff_id):

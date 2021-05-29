@@ -22,6 +22,9 @@ class Staff(db.Model):
     position = db.Column(db.String(64))
     gender = db.Column(db.String(10))
     address = db.Column(db.String(128))
+    img = db.Column(db.String(128), unique=True)
+    img_name = db.Column(db.String(128), nullable=False)
+    img_mime = db.Column(db.String(128), nullable=False)
     dtr = db.relationship('DailyTimeRecord')
 
     

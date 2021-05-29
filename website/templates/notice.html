@@ -1,5 +1,13 @@
 {% extends "base.html" %} {% block title %}Success!{% endblock %}
 {% block content %}
+
+{% if staff.img_name != None %}
+<img src="/img/{{staff.staff_id_no}}" class="card-img-top rounded-circle mb-4 mt-4 img-fluid img-thumbnail notice-photo text-center mx-auto d-block" alt="{{staff.name}}">
+{% else %}
+<img src="{{ url_for('static',filename='media/user.png') }}" alt="{{staff.name}}" class="card-img-top rounded-circle mb-4 mt-4 img-fluid img-thumbnail notice-photo text-center mx-auto d-block">
+{% endif %}
+
+<!-- <img src="/img/{{staff.staff_id_no}}" class="card-img-top rounded-circle mb-4 mt-4 img-fluid img-thumbnail notice-photo text-center mx-auto d-block" alt="dev"> -->
 <p class="display-1">{{ time }}</p>
 <p class="h2">{{ day }}</p>
 <hr>

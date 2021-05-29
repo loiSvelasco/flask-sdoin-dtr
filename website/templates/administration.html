@@ -3,10 +3,11 @@
 <h1 class="mb-4">Manage Personnel <br>
   <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-add"></i> Add Personnel</button>
 </h1>
-<table class="table table-dark table-striped" id="staffTable">
+<table class="table table-dark table-striped align-middle" id="staffTable">
   <thead>
     <tr>
       <th class="d-none">id</th>
+      <th></th>
       <th>ID #</th>
       <th>Name</th>
       <th></th>
@@ -16,6 +17,13 @@
     {% for personnel in staff %}
     <tr>
       <td class="d-none">{{personnel.id}}</td>
+      <th>
+        {% if personnel.img_name != None %}
+        <img src="/img/{{personnel.staff_id_no}}" alt="{{personnel.img_name}}" class="staff_img">
+        {% else %}
+        <img src="{{ url_for('static',filename='media/user.png') }}" alt="{{personnel.img_name}}" class="staff_img">
+        {% endif %}
+      </th>
       <td>{{personnel.staff_id_no}}</td>
       <td>{{personnel.name}}</td>
       <td>
@@ -37,10 +45,15 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body text-dark">
-        <form method="POST" id="admin_personnel"></form>
+        <form method="POST" id="admin_personnel" enctype="multipart/form-data"></form>
         <div class="mb-3">
           <input type="hidden" class="form-control" form="admin_personnel" name="db_id" id="p_db_id" value="">
         </div>
+
+        <div class="mb-3">
+          <input type="file" class="form-control" form="admin_personnel" name="personnel_img" id="p_img" value="">
+        </div>
+
         <div class="mb-3">
           <input type="text" class="form-control" form="admin_personnel" name="personnel_id" id="p_id" placeholder="ID #" value="">
         </div>

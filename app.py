@@ -2,6 +2,7 @@ from website import create_app
 from flask import render_template
 from flask_login import current_user
 
+
 app = create_app()
 
 @app.errorhandler(404)
@@ -11,4 +12,5 @@ def not_found(e):
 if __name__ == '__main__':
     app.run(debug=True)
 
-# * To run: waitress-serve --port=80 --call "app:create_app"
+#                           CHANGE TO UR IPV4
+# * To run: waitress-serve --host=192.168.1.4 --port=80 --call "app:create_app"
