@@ -13,4 +13,4 @@ if __name__ == '__main__':
     app.run(debug=True)
 
 #                           CHANGE TO UR IPV4
-# * To run: waitress-serve --host=192.168.1.4 --port=80 --call "app:create_app"
+# * To run: waitress-serve --host=192.168.101.193 --port=80 --call "app:create_app"
