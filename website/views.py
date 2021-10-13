@@ -33,7 +33,7 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
+                    flash('Hello ' + staff.name.split(' ', 1)[0] + '! You have just timed-in for the morning, to avoid duplicate records, try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_out_am = dt
@@ -44,7 +44,7 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
+                    flash('Hello ' + staff.name.split(' ', 1)[0] + '! You have just timed-out for the morning, to avoid duplicate records, try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_in_pm = dt
@@ -55,15 +55,16 @@ def index():
                 c = b-a
                 mins = c.seconds / 60
                 if mins < 1:
-                    flash('It hasn\'t been a minute yet for ' + staff.name + '. To avoid duplicate records, please try again in a minute.', category='error')
+                    flash('Hello ' + staff.name.split(' ', 1)[0] + '! You have just timed-in for the afternoon, to avoid duplicate records, try again in a minute.', category='error')
                     return render_template('index.html', user=current_user)
                 else:
                     dtr_log.time_out_pm = dt
                     db.session.commit()
                     return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Good work today ' + staff.name.split(' ',1)[0] + '!')
             else:
-                flash('Your in and out for the morning and afternoon already exists! Please do not spam this application.', category='error')
-                return render_template('index.html', user=current_user)
+                dtr_log.time_out_pm = dt
+                db.session.commit()
+                return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Good work today ' + staff.name.split(' ',1)[0] + '!')
         else:
             new_dtr_log = DailyTimeRecord(time_in_am=dt, time_out_am=None, time_in_pm=None, time_out_pm=None, staff_id=staff.id)
             db.session.add(new_dtr_log)
@@ -105,7 +106,7 @@ def generate_report(staff_id):
         extract('month', DailyTimeRecord.time_in_am)
     ).distinct()
     
-    return render_template('generate_user_log.html', user=current_user, staff=staff, months=months)
+    return render_template('generate_user_log.html', user=current_user, staff=staff, months=months, year=year_now)
 
 @views.route('/generate/<string:staff_id>/viewdtr/<int:year>/<int:month>')
 def monthly_record(staff_id, year, month):
@@ -158,13 +159,17 @@ def admin():
             db.session.commit()
             flash('Changes saved!', category='success')
         else:
-            if not img:
-                new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None)
+            check = Staff.query.filter(Staff.staff_id_no==id).count()
+            if(check > 0):
+                flash('Employee already exists.', category="error")
             else:
-                new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None, img=img.read(), img_name=filename, img_mime=mimetype)
-            db.session.add(new_staff)
-            db.session.commit()
-            flash('Added ' + name + ' to the database!', category='success')
+                if not img:
+                    new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None)
+                else:
+                    new_staff = Staff(staff_id_no=id, name=name, position=None, gender=None, address=None, img=img.read(), img_name=filename, img_mime=mimetype)
+                db.session.add(new_staff)
+                db.session.commit()
+                flash('Added ' + name + ' to the database!', category='success')
     staff = Staff.query.all()
     return render_template('administration.html', user=current_user, staff=staff)
 
