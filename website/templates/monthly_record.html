@@ -1,21 +1,40 @@
 {% extends "base.html" %} {% block title %}Generate{% endblock %}
 {% block content %}
-<h3 class="mt-4">Here's your DTR for {{month_name}} {{year}}</h3>
+<h3 class="mt-4 d-print-none">Here's your DTR for {{month_name}} {{year}}</h3>
+<button class="btn btn-light text-decoration-none d-print-none" id="printDTR" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
 <div class="row mt-4">
   <div class="col">
-    <table class="table table-dark table-sm table-hover table-bordered table-striped">
+
+    <div class="text-dark d-none d-print-block" style="margin-bottom: 0px;">
+      <div class="text-start" style="margin-bottom: 1%;">
+        CIVIL SERVICE FORM No. 48
+        <br>
+      </div>
+      <strong class="text-decoration-underline" style="margin-bottom: 1%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DAILY TIME RECORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+      <div class="border-bottom" style="border-color: black !important;" width="100%">
+        <span class="h6 text-uppercase">{{personnel.name}}</span>
+      </div>
+      Name
+      <p class="lh-1 text-start" style="margin: 1% 0% 1% 0%;">For the month of {{month_name}}, {{year}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Regular Days: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+      <p class="lh-1 text-start" style="margin-bottom: 1%;">Official hours of arrival and departure &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Starudays: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+    </div>
+
+    <table class="table table-light table-sm table-hover table-bordered border-dark table-striped text-dark" style="margin: 0px;">
       <thead>
         <tr>
-          <th class="text-center"></th>
-          <th colspan="2" class="text-center">AM</th>
-          <th colspan="2" class="text-center">PM</th>
+          <th width="auto" class="text-center"></th>
+          <th width="auto" colspan="2" class="text-center">AM</th>
+          <th width="auto" colspan="2" class="text-center">PM</th>
+          <th width="auto" colspan="2" class="text-center">UNDERTIME</th>
         </tr>
         <tr>
-          <th class="text-center">{{month_name}}</th>
-          <th class="text-center">In</th>
-          <th class="text-center">Out</th>
-          <th class="text-center">In</th>
-          <th class="text-center">Out</th>
+          <th class="text-center">Day</th>
+          <th class="text-center">Arrival</th>
+          <th class="text-center">Departure</th>
+          <th class="text-center">Arrival</th>
+          <th class="text-center">Departure</th>
+          <th class="text-center">Hours</th>
+          <th class="text-center">Minutes</th>
         </tr>
       </thead>
         <tbody>
@@ -23,14 +42,26 @@
             {% for day in days if day.time_in_am.strftime('%d')|int == i %}
             <tr>
               <td class="text-center">{{i}}</td>
-              <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <!-- CODE BELOW DISPLAYS AM AND PM -->
+              <!-- <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
               <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
               <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
-              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td> -->
+              <!-- CODE BELOW DOES NOT DISPLAY AM AND PM -->
+              <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
+
+
+              <td class="text-center"></td>
+              <td class="text-center"></td>
             </tr>
             {% else %}
             <tr>
               <td class="text-center">{{i}}</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
               <td class="text-center"></td>
               <td class="text-center"></td>
               <td class="text-center"></td>
@@ -40,9 +71,26 @@
           {% endfor %}
       </tbody>
     </table>
+    <div class="text-dark d-none d-print-block" style="margin-top: 0px;">
+      <div class="text-start border-bottom" style="border-color: black !important;" width="100%">
+        <i><strong>TOTAL</strong></i>
+      </div>
+      <div class="text-start text-small text-justify border-bottom" style="border-color: black !important;" width="100%">
+        <i>I CERTIFY on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time 
+          of arrival and departure from office.
+        </i>
+        <br>
+        <br>
+        <br>
+      </div>
+      Verified as to the prescribed office hours.
+      <div class="text-start text-justify border-bottom" style="border-color: black !important;" width="100%">
+        <br>
+        <br>
+      </div>
+      In-charge
+    </div>
   </div>
 </div>
-
-
 
 {% endblock %}

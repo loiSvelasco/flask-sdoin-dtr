@@ -60,7 +60,7 @@ function currentTime() {
 
   function updateTime(k) {
     if (k < 10) {
-      return "0" + k;
+      return k;
     }
     else {
       return k;

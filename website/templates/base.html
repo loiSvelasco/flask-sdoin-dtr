@@ -13,7 +13,7 @@
     <meta name="description" content="sdoin.dtr - open-source project for schools division of ilocos norte">
     <meta name="generator" content="Hugo 0.83.1">
     <meta name="author" content="Louis Eusebius Superficial Velasco">
-    <title>{% block title%}{% endblock%}</title>
+    <title class="d-print-none">{% block title%}{% endblock%}</title>
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
@@ -56,7 +56,7 @@
   <body class="d-flex h-100 text-center text-white bg-dark">
     
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-  <header class="mb-auto">
+  <header class="mb-auto d-print-none">
     <div>
       <h3 class="float-md-start mb-0"><a href="/" class="text-decoration-none text-white">~sdoin.dtr</a></h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
@@ -114,7 +114,7 @@
   {% block modals %}
   {% endblock %}
 
-  <footer class="mt-auto text-white-50">
+  <footer class="mt-auto text-white-50 d-print-none">
     <p>Improved daily time record for <a href="https://depedilocosnorte.com/sdoin/" target="_blank" class="text-white text-decoration-none">Schools Division of Ilocos Norte</a>, <br>by <a href="https://www.facebook.com/louis.superficial.velasco.1/" target="_blank" class="text-white text-decoration-none">Louis Velasco</a>. &lt;/&gt; with ❤</p>
   </footer>
 </div>

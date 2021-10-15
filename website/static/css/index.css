@@ -169,3 +169,25 @@ body {
   border-width: 2px 2px;
   border-color: #d9d9d9; */
 }
+
+@media print {
+  
+  body {
+    margin: 0;
+    text-shadow: none !important;
+    font-size: 9px; 
+  }
+
+  table{
+    font-size: 8px; 
+    text-shadow: none !important;
+  }
+
+  @page {
+    /* padding: 4cm; */
+    size: A4 portrait;
+    margin-top: 0px !important;
+    margin-right: 50% !important;
+  }
+  
+}

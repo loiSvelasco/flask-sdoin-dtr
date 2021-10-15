@@ -38,7 +38,7 @@ def index():
                 else:
                     dtr_log.time_out_am = dt
                     db.session.commit()
-                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Enjoy your lunch ' + staff.name.split(' ',1)[0] + '!')
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), status='TIME OUT - AM', message='Enjoy your lunch ' + staff.name.split(' ',1)[0] + '!')
             elif dtr_log.time_in_pm == None:
                 a, b = dtr_log.time_out_am, dt
                 c = b-a
@@ -49,7 +49,7 @@ def index():
                 else:
                     dtr_log.time_in_pm = dt
                     db.session.commit()
-                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Welcome back ' + staff.name.split(' ',1)[0] + '! How was your lunch?')
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), status='TIME IN - PM', message='Welcome back ' + staff.name.split(' ',1)[0] + '! How was your lunch?')
             elif dtr_log.time_out_pm == None:
                 a, b = dtr_log.time_in_pm, dt
                 c = b-a
@@ -60,16 +60,16 @@ def index():
                 else:
                     dtr_log.time_out_pm = dt
                     db.session.commit()
-                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Good work today ' + staff.name.split(' ',1)[0] + '!')
+                    return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), status='TIME OUT - PM', message='Good work today ' + staff.name.split(' ',1)[0] + '!')
             else:
                 dtr_log.time_out_pm = dt
                 db.session.commit()
-                return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Good work today ' + staff.name.split(' ',1)[0] + '!')
+                return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), status='TIME OUT - PM', message='Good work today ' + staff.name.split(' ',1)[0] + '!')
         else:
             new_dtr_log = DailyTimeRecord(time_in_am=dt, time_out_am=None, time_in_pm=None, time_out_pm=None, staff_id=staff.id)
             db.session.add(new_dtr_log)
             db.session.commit()
-            return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), message='Enjoy your day ' + staff.name.split(' ',1)[0] + '!')
+            return render_template('notice.html', user=current_user, staff=staff, time=dt.strftime('%I:%M %p'), day=dt.strftime('%A, %B %d'), status='TIME IN - AM', message='Enjoy your day ' + staff.name.split(' ',1)[0] + '!')
     return render_template('index.html', user=current_user)
 
 
@@ -128,10 +128,14 @@ def monthly_record(staff_id, year, month):
         extract('month', DailyTimeRecord.time_in_am) == month
     ).all()
 
+    personnel = Staff.query.filter(
+        Staff.staff_id_no == staff_id
+    ).first()
+
     if year_now != year and year_now < year:
         return render_template('timetravel.html', user=current_user, year=year, days=days, month_name=month_name)   
 
-    return render_template('monthly_record.html', user=current_user, year=year, days=days, month_name=month_name)
+    return render_template('monthly_record.html', personnel=personnel, user=current_user, year=year, days=days, month_name=month_name)
 
 @views.route('/admin', methods=['GET', 'POST'])
 @login_required
