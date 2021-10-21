@@ -175,7 +175,8 @@ body {
   body {
     margin: 0;
     text-shadow: none !important;
-    font-size: 9px; 
+    font-size: 9px;
+    zoom: 95% !important;
   }
 
   table{
@@ -187,7 +188,10 @@ body {
     /* padding: 4cm; */
     size: A4 portrait;
     margin-top: 0px !important;
-    margin-right: 50% !important;
+    /* margin-right: 50% !important; */
+    margin-right: 5in !important;
+    margin-left: 0in !important;
+    margin-bottom: 0in !important;
   }
   
 }
