@@ -5,13 +5,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
 $('#staffTable').DataTable({
     pagingType: "full",
-    lengthChange: false
+    lengthChange: false,
+    pageLength: 15
 });
 
 $('#logTable').DataTable({
     pagingType: "simple",
     lengthChange: false,
-    pageLength: 15
+    pageLength: 20
 });
 
 $(document).ready(function() {

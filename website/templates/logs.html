@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Daily Logs{% endblock %}
 {% block content %}
 <h1 class="mb-4">Logs for today.</h1>
-<table class="table table-dark table-hover table-bordered table-striped" id="logTable">
+<table class="table table-light table-hover table-borderless table-responsive table-striped align-middle" id="logTable">
   <thead>
     <tr>
       <th class="text-center">~sdoin.dtr</th>
@@ -20,7 +20,14 @@
     {% for dtr in allDtr %}
     <tr>
       {% for personnel in allStaff if personnel.id == dtr.staff_id %}
-      <td>{{personnel.name}}</td>
+      <td>
+        {% if personnel.img_name != None %}
+        <img src="/img/{{personnel.staff_id_no}}" alt="{{personnel.img_name}}" class="staff_img">
+        {% else %}
+        <img src="{{ url_for('static',filename='media/user.png') }}" alt="{{personnel.img_name}}" class="staff_img">
+        {% endif %}
+        {{personnel.name}}
+      </td>
       {% endfor %}
       <td class="text-center">{% if dtr.time_in_am is not none %}{{dtr.time_in_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
       <td class="text-center">{% if dtr.time_out_am is not none %}{{dtr.time_out_am.strftime('%I:%M')}}{% else %}{% endif %}</td>

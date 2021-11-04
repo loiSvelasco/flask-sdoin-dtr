@@ -3,14 +3,14 @@
 <h1 class="mb-4">Manage Personnel <br>
   <button class="btn btn-sm btn-outline-light" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-add"></i> Add Personnel</button>
 </h1>
-<table class="table table-dark table-striped align-middle" id="staffTable">
+<table class="table table-light table-responsive table-striped align-middle" id="staffTable">
   <thead>
     <tr>
       <th class="d-none">id</th>
       <th></th>
       <th>ID #</th>
       <th>Name</th>
-      <th></th>
+      <th>Action</th>
     </tr>
   </thead>
   <tbody>
@@ -27,7 +27,8 @@
       <td>{{personnel.staff_id_no}}</td>
       <td>{{personnel.name}}</td>
       <td>
-        <span data-bs-toggle="tooltip" data-bs-placement="left" title="Edit"><button class="btn btn-outline-light editPersonnel" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil-square-o"></i></button></span>
+        <span data-bs-toggle="tooltip" data-bs-placement="left" title="View DTR"><a href="generate/{{personnel.staff_id_no}}" target="_blank" class="btn btn-outline-success"><i class="fa fa-eye"></i></a></span>
+        <span data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><button class="btn btn-outline-primary editPersonnel" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa fa-pencil-square-o"></i></button></span>
         <span data-bs-toggle="tooltip" data-bs-placement="right" title="Delete"><button data-href="/del/personnel/{{personnel.id}}" data-name="{{personnel.name}}" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#confirm-del"><i class="fa fa-trash"></i></button></span>
       </td>
     </tr>
@@ -64,7 +65,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-dark" form="admin_personnel" id="save-btn">Add Personnel</button>
+        <button type="submit" class="btn btn-success" form="admin_personnel" id="save-btn">Add Personnel</button>
       </div>
     </div>
   </div>
