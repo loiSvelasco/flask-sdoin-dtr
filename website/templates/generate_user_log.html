@@ -4,7 +4,8 @@
 <p class="lead fs-6">
   Months listed below are of the year {{ year }}.
   <br>
-  If a month is not listed, it means no record was found during that month.</p>
+  If a month is not listed, it means no record was found during that month.  
+</p>
 <div class="row mt-4">
   <div class="col">
       {% for month in months  %}
@@ -13,10 +14,36 @@
         class="btn btn-lg btn-outline-light mb-3 mr-3"
         >{{ month.time_in_am.strftime('%B') }}
         </a>
-    {% endfor %}
+      {% endfor %}
   </div>
 </div>
-
-
+<br>
+<hr>
+<p class="lead fs-3">Want to see old records? Use the dropdown fields below:</p>
+<form method="POST" id="view_archive"></form>
+<div class="input-group">
+  <select name="selectedMonth" form="view_archive" class="form-select" aria-label="Default select example" required>
+    <option selected disabled="disabled">Select Month</option>
+      <option value="1">January</option>
+      <option value="2">February</option>
+      <option value="3">March</option>
+      <option value="4">April</option>
+      <option value="5">May</option>
+      <option value="6">June</option>
+      <option value="7">July</option>
+      <option value="8">August</option>
+      <option value="9">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
+  </select>
+  <select name="selectedYear" class="form-select" form="view_archive" aria-label="Default select example" required>
+    <option selected disabled="disabled">Select Year</option>
+    {% for year in recorded_years  %}
+      <option value="{{ year.time_in_am.strftime('%Y') }}">{{ year.time_in_am.strftime('%Y') }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-lg btn-primary" type="submit" form="view_archive" name="submit">Go</button>
+</div>
 
 {% endblock %}

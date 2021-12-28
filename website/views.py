@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, flash, Blueprint, redirect, url_for, Response
 from flask_login import login_required, current_user
-from sqlalchemy import func, extract
+from sqlalchemy import func, extract, desc
 from .models import Staff, DailyTimeRecord
 from . import db
 from datetime import datetime, date
@@ -99,11 +99,17 @@ def generate():
 
     return render_template('generate.html', user=current_user)
 
-@views.route('/generate/<string:staff_id>')
+@views.route('/generate/<string:staff_id>', methods=['GET', 'POST'])
 def generate_report(staff_id):
     staff = Staff.query.filter_by(staff_id_no=staff_id).first()
     dt = date.today()
     year_now = dt.year
+
+    if request.method == 'POST':
+        selectedMonth = request.form.get('selectedMonth')
+        selectedYear = request.form.get('selectedYear')
+        return redirect(url_for('views.monthly_record', staff_id=staff_id, month=selectedMonth, year=selectedYear))
+    
 
     months = DailyTimeRecord.query.filter(
         DailyTimeRecord.staff_id == staff.id,
@@ -111,8 +117,15 @@ def generate_report(staff_id):
     ).group_by(
         extract('month', DailyTimeRecord.time_in_am)
     ).distinct()
+
+    years = DailyTimeRecord.query.filter(
+        DailyTimeRecord.staff_id == staff.id,
+        extract('year', DailyTimeRecord.time_in_am)
+    ).group_by(
+        extract('year', DailyTimeRecord.time_in_am)
+    ).distinct().order_by(desc(DailyTimeRecord.time_in_am)).limit(5)
     
-    return render_template('generate_user_log.html', user=current_user, staff=staff, months=months, year=year_now)
+    return render_template('generate_user_log.html', user=current_user, staff=staff, months=months, year=year_now, recorded_years = years)
 
 @views.route('/generate/<string:staff_id>/viewdtr/<int:year>/<int:month>')
 def monthly_record(staff_id, year, month):

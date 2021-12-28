@@ -19,7 +19,7 @@
 body {
   /* background-blend-mode: color; */
   /* background-color: rgba(0, 0, 0, 0.192); */
-  background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .1)), url("../media/mountains_dark.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, .3), rgba(0, 0, 0, .1)), url("../media/mountains_fall_dark.jpg");
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
