@@ -3,8 +3,7 @@
 <h3 class="mt-4 d-print-none">Here's your DTR for {{month_name}} {{year}}</h3>
 <button class="btn btn-light text-decoration-none d-print-none" id="printDTR" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
 <div class="row mt-4">
-  <div class="col">
-
+  <div class="col"> <!-- START COL DTR TABLE -->
     <div class="text-dark d-none d-print-block" style="margin-bottom: 0px;">
       <div class="text-start" style="margin-bottom: 1%;">
         CIVIL SERVICE FORM No. 48
@@ -15,8 +14,8 @@
         <span class="h6 text-uppercase">{{personnel.name}}</span>
       </div>
       Name
-      <p class="lh-1 text-start" style="margin: 1% 0% 1% 0%;">For the month of {{month_name}}, {{year}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Regular Days: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
-      <p class="lh-1 text-start" style="margin-bottom: 1%;">Official hours of arrival and departure &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Starudays: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+      <p class="lh-1 text-start" style="margin: 1% 0% 1% 0%;">For the month of {{month_name}}, {{year}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Regular Days: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+      <p class="lh-1 text-start" style="margin-bottom: 1%;">Official hours of arrival and departure &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Starudays: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
     </div>
 
     <table class="table table-light table-sm table-hover table-responsive table-bordered border-dark table-striped text-dark" style="margin: 0px;">
@@ -90,7 +89,7 @@
       </div>
       In-charge
     </div>
-  </div>
+  </div> <!-- END COL DTR TABLE -->
 </div>
 
 {% endblock %}
