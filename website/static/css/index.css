@@ -229,4 +229,9 @@ body {
   } /* page-break-after works, as well */
 }
 
+.insText {
+  margin-left: 3rem;
+  width: 80%;
+}
+
 .col-print-6 {width:50%; float:left; margin: auto;}
