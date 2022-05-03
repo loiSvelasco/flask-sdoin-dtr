@@ -169,29 +169,64 @@ body {
   border-color: #d9d9d9; */
 }
 
+/* @media (min-width: 670px) {
+  * {
+    margin: 0px !important;
+  }
+} */
+
 @media print {
-  
   body {
-    margin: 0;
+    /* margin: 0 !important; */
     text-shadow: none !important;
     font-size: 9px;
     zoom: 100% !important;
   }
 
-  table{
+  table {
     font-size: 8px; 
     font-weight: bold !important;
     text-shadow: none !important;
   }
 
   @page {
+    width: 670px !important;
     /* padding: 4cm; */
     size: A4 portrait;
     margin-top: 0px !important;
     /* margin-right: 50% !important; */
-    margin-right: 4in !important;
+    margin-right: .7in !important;
     margin-left: 0in !important;
-    margin-bottom: 0in !important;
+    /* margin-bottom: 0in !important; */
   }
   
 }
+
+.spacer {
+  width: .2rem;
+}
+
+.page {
+  min-width: 670px !important;
+  /* left: 0px !important; */
+  /* margin-left: 1in !important; */
+  /* padding: 1em; */
+  /* margin-right: 1in !important; */
+}
+
+.page:after {
+  content: "";
+  padding: 3px;
+  display: table;
+  clear: both;
+}
+
+@media print {
+  .pagebreak {
+    display: block;
+    break-before: always;
+    -webkit-break-before: always;
+  } /* page-break-after works, as well */
+}
+
+.col-print-6 {width:50%; float:left; margin: auto;}

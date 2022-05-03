@@ -15,7 +15,7 @@
     <meta name="author" content="Louis Eusebius Superficial Velasco">
     <title class="d-print-none">{% block title%}{% endblock%}</title>
     <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-CnulcegG9neK5jyFluF289RmiEalb+EVR9gKnoZQw2qd3vii5Fn3UD42ZoQ4hz0w" crossorigin="anonymous">
+    <link href="{{ url_for('static',filename='css/bootstrap.min.css') }}" rel="stylesheet"crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/font-awesome.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static',filename='css/devicon.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/datatables.min.css') }}"/>
@@ -118,11 +118,13 @@
     <p>Improved daily time record for <a href="https://depedilocosnorte.com/sdoin/" target="_blank" class="text-white text-decoration-none">Schools Division of Ilocos Norte</a>, <br>by <a href="https://www.facebook.com/louis.superficial.velasco.1/" target="_blank" class="text-white text-decoration-none">Louis Velasco</a>. &lt;/&gt; with ❤</p>
   </footer>
 </div>
-  <script src="{{ url_for('static',filename='js/popper.min.js') }}" integrity="sha384-UcnH9YGksOwQ/vE9YB1RkZTMYxXU2yyyGzTfLTu/j92deicLVPmLJRiQiT+/lnzZ" crossorigin="anonymous"></script>
-  <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}" integrity="sha384-2cdsWFXQNVnJs+5QDOfbz1K3HI4NXQvVt/aLF8mmQ5RHYyXqpx6w89/J/7/O5pje" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static',filename='js/popper.min.js') }}" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static',filename='js/bootstrap.min.js') }}" crossorigin="anonymous"></script>
   <script type="text/javascript" src="{{ url_for('static',filename='js/pdfmake.min.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static',filename='js/vfs_fonts.js') }}"></script>
   <script type="text/javascript" src="{{ url_for('static',filename='js/datatables.min.js') }}"></script>
   <script src="{{ url_for('static',filename='js/index.js') }}"></script>
   </body>
+  {% block print %}
+  {% endblock %}
 </html>
