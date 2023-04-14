@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 {% extends "base.html" %} {% block title %}Generate{% endblock %}
 {% block content %}
 <h3 class="mt-4 d-print-none">Here's your DTR for {{month_name}} {{year}}</h3>
@@ -218,4 +219,230 @@
   </div>
 
 </div>
+=======
+{% extends "base.html" %} {% block title %}Generate{% endblock %}
+{% block content %}
+<h3 class="mt-4 d-print-none">Here's your DTR for {{month_name}} {{year}}</h3>
+<button class="btn btn-light text-decoration-none d-print-none mb-3" id="printDTR" onclick="window.print()"><i class="fa fa-print"></i> Print</button>
+<!-- <pre>When printing, make sure the paper size is in A4, margins are set to default, scale to custom (100)</pre> -->
+<div class="alert alert-warning d-print-none" role="alert">
+  <strong>Note:</strong> When printing, make sure the paper size is A4, margins are set to default, and scale is set to custom (100).
+</div>
+<div class="row mt-3">
+  <!-- 1ST PAGE -->
+  <div class="col d-print-none"> <!-- START COL DTR TABLE -->
+    <table class="table table-light table-sm table-hover table-responsive table-bordered border-dark table-striped text-dark" style="margin: 0px;">
+      <thead>
+        <tr>
+          <th width="auto" class="text-center"></th>
+          <th width="auto" colspan="2" class="text-center">AM</th>
+          <th width="auto" colspan="2" class="text-center">PM</th>
+          <th width="auto" colspan="2" class="text-center">UNDERTIME</th>
+        </tr>
+        <tr>
+          <th class="text-center">Day</th>
+          <th class="text-center">Arrival</th>
+          <th class="text-center">Departure</th>
+          <th class="text-center">Arrival</th>
+          <th class="text-center">Departure</th>
+          <th class="text-center">Hours</th>
+          <th class="text-center">Minutes</th>
+        </tr>
+      </thead>
+        <tbody>
+          {% for i in range(1,32) %}
+            {% for day in days if day.time_in_am.strftime('%d')|int == i %}
+            <tr>
+              <td class="text-center">{{i}}</td>
+              <!-- CODE BELOW DISPLAYS AM AND PM -->
+              <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+              <!-- CODE BELOW DOES NOT DISPLAY AM AND PM -->
+              <!-- <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
+              <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M')}}{% else %}{% endif %}</td> -->
+
+
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+            </tr>
+            {% else %}
+            <tr>
+              <td class="text-center">{{i}}</td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+              <td class="text-center"></td>
+            </tr>
+            {% endfor %}
+          {% endfor %}
+      </tbody>
+    </table>
+  </div> <!-- END COL DTR TABLE -->
+  <!-- END OF 1ST PAGE -->
+</div>
+{% endblock %}
+
+{% block print %}
+<div class="page d-none d-print-block mt-4">
+  
+  <div class="col-print-6">
+    <!-- 1ST PAGE -->
+    <div class="col" style="margin-right: 2rem; margin-left: -2rem;"> <!-- START COL DTR TABLE -->
+      <div class="text-dark" style="margin-bottom: 0px;">
+        <div class="text-start" style="margin-bottom: 1%;">
+          CIVIL SERVICE FORM No. 48
+          <br>
+        </div>
+        <strong class="text-decoration-underline" style="margin-bottom: 1%;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DAILY TIME RECORD&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+        <div class="border-bottom" style="border-color: black !important;" width="100%">
+          <span class="h6 text-uppercase">{{personnel.name}}</span>
+        </div>
+        Name
+        <table style="text-align: left;">
+          <tr>
+            <th>For the month of {{month_name}}, {{year}}</th>
+            <th>&nbsp;&nbsp;&nbsp;&nbsp;Regular Days: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></th>
+          </tr>
+          <tr>
+            <td>Official hours of arrival and departure: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;Saturdays: <span class="text-decoration-underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td>
+          </tr>
+        </table>
+      </div>
+
+      <table class="table table-light table-sm table-hover table-responsive table-bordered border-dark table-striped text-dark" style="margin: 0px;">
+        <thead>
+          <tr>
+            <th width="auto" class="text-center"></th>
+            <th width="auto" colspan="2" class="text-center">AM</th>
+            <th width="auto" colspan="2" class="text-center">PM</th>
+            <th width="auto" colspan="2" class="text-center">UNDERTIME</th>
+          </tr>
+          <tr>
+            <th class="text-center">Day</th>
+            <th class="text-center">Arrival</th>
+            <th class="text-center">Departure</th>
+            <th class="text-center">Arrival</th>
+            <th class="text-center">Departure</th>
+            <th class="text-center">Hours</th>
+            <th class="text-center">Minutes</th>
+          </tr>
+        </thead>
+          <tbody>
+            {% for i in range(1,32) %}
+              {% for day in days if day.time_in_am.strftime('%d')|int == i %}
+              <tr>
+                <td class="text-center">{{i}}</td>
+                <!-- CODE BELOW DISPLAYS AM AND PM -->
+                <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M %p')}}{% else %}{% endif %}</td>
+                <!-- CODE BELOW DOES NOT DISPLAY AM AND PM -->
+                <!-- <td class="text-center">{% if day.time_in_am is not none %}{{day.time_in_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_out_am is not none %}{{day.time_out_am.strftime('%I:%M')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_in_pm is not none %}{{day.time_in_pm.strftime('%I:%M')}}{% else %}{% endif %}</td>
+                <td class="text-center">{% if day.time_out_pm is not none %}{{day.time_out_pm.strftime('%I:%M')}}{% else %}{% endif %}</td> -->
+
+
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+              </tr>
+              {% else %}
+              <tr>
+                <td class="text-center">{{i}}</td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+                <td class="text-center"></td>
+              </tr>
+              {% endfor %}
+            {% endfor %}
+        </tbody>
+      </table>
+      <div class="text-dark d-none d-print-block" style="margin-top: 0px;">
+        <div class="text-start border-bottom" style="border-color: black !important;" width="100%">
+          <i><strong>TOTAL</strong></i>
+        </div>
+        <div class="text-start text-small text-justify border-bottom" style="border-color: black !important;" width="100%">
+          <i>I CERTIFY on my honor that the above is a true and correct report of the hours of work performed, record of which was made daily at the time 
+            of arrival and departure from office.
+          </i>
+          <br>
+          <br>
+          <br>
+        </div>
+        Verified as to the prescribed office hours.
+        <div class="text-start text-justify border-bottom" style="border-color: black !important;" width="100%">
+          <br>
+          <br>
+        </div>
+        In-charge
+      </div>
+    </div> <!-- END COL DTR TABLE -->
+  <!-- END OF 1ST PAGE -->
+  </div>
+
+  <!-- // --------------------------------------------------------// -->
+
+  <div class="col-print-6">
+    <!-- 2ND PAGE -->
+    <div class="col" style="margin-left: 2rem;"> <!-- START COL DTR TABLE -->
+      <div class="text-dark" style="margin-bottom: 0px;">
+        <div style="margin-bottom: 1%;"></div>
+        <br>
+        <br>
+        <div class="insText border-bottom" style="border-color: black !important;" width="100%">
+          <span class="h6 text-uppercase">INSTRUCTIONS</span>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="insText text-dark d-none d-print-block" style="margin-top: 0px;">
+        <div class="text-start text-small text-justify border-bottom" style="border-color: black !important;" width="100%">
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Civil Service Form No. 48, after completion, Should be filed in the records of 
+            the Bureau or Office which submits the monthly report on Civil Service Form No. 3 to the Bureau of Civil Service.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In lieu of the above, court interpreters and stenographers who 
+            accompany the judges of the Court of First Instance will fill out the daily time reports on this form in triplicate, 
+            after which they should be approved by the judge with whom service has been rendered, or by an officer of the Department of 
+            Justice authorized to do so. The original should be forwarded promptly after the end of the month to the Bureau of Civil Service, 
+            thru the Department of Justice, the duplicate to kept in the department of justice; and the triplicate, in the office of the Clerk of 
+            Court where service was rendered.</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;In the space provided for the purpose on the other side will be 
+            indicated the office hours the employee is required to observe, as for example, “Regular days, 8:00 to 12:00 and 1:00 to 4:00; 
+            Saturdays 8:00 to 1:00.”</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Attention is invited to paragraph 3, Civil Service Rule XV, Executive Order No. 5, 
+            series of 1909, which reads as follows:“</p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each chief of a Bureau or Office shall require a daily record of attendance 
+            of all the officers and employees under him entitled to leave or absence or vacation (including teachers) to be kept on the proper 
+            form and also a systematic office record showing for each day all absences from duty from any cause whatever. At the beginning of each 
+            month he shall report to the Commissioner on the proper form of all absences from any cause whatever, including the exact amount of undertime 
+            of each person for each day. Officers or employees serving in the field or on the water need not be required to keep a daily record, but all 
+            absences of such employees must be included in the monthly report of changes and absences. Falsification of time records will render the offending 
+            officers or employee liable to summary removal from the service and criminal prosecution.</p>
+          <p></p>
+          <p></p>
+          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(NOTE – A record made from memory at sometime subsequent to the occurrence of 
+            as event is not reliable. Non observance of office hours deprives the employee of the leave privileges although he may have rendered overtime 
+            service. Where service rendered outside of the Office for the whole morning or afternoon, notation to that effect should be made clearly.)</p>
+          <br>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div> <!-- END COL DTR TABLE -->
+    <!-- END OF 2ND PAGE -->
+  </div>
+
+</div>
+>>>>>>> Stashed changes
 {% endblock %}

@@ -108,7 +108,12 @@ def generate_report(staff_id):
     if request.method == 'POST':
         selectedMonth = request.form.get('selectedMonth')
         selectedYear = request.form.get('selectedYear')
-        return redirect(url_for('views.monthly_record', staff_id=staff_id, month=selectedMonth, year=selectedYear))
+
+        if selectedMonth == None or selectedYear == None:
+            flash('Please select the month and year!', category='error')
+            return redirect(url_for('views.generate_report', staff_id=staff_id))
+        else:
+            return redirect(url_for('views.monthly_record', staff_id=staff_id, month=selectedMonth, year=selectedYear))
     
 
     months = DailyTimeRecord.query.filter(

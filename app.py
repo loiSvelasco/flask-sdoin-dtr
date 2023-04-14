@@ -11,7 +11,7 @@ def not_found(e):
 
 if __name__ == '__main__':
     # app.run(debug=True)
-    serve(app.app, host='192.168.1.4', port=5000, threads=8)
+    serve(app.app, host='192.168.1.4', port=5000, threads=4)
 
 #                           CHANGE TO UR IPV4
 # * To run: waitress-serve --host=192.168.101.193 --port=80 --call "app:create_app"
